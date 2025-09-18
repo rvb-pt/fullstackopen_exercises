@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML Document
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: CSS Stylesheet
+    deactivate server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: single-page application JavaScript
+    deactivate server
+
+    Note right of browser: JavaScript to fetch initial data
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{"content":"hola","date":"2025-09-17T15:12:13.699Z"}...]
+    deactivate server
+
+    Note right of browser: Browser dynamically updates /notes using JavaScript
+
+    browser->>server: GET https://studies.cs.helsinki.fi/favicon.ico
+    activate server
+    server-->>browser: Img Not Found
+    deactivate server
+
+    Note right of browser: Wrote a new note "wow2" and clicked Save
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    server-->>browser: 201 Created : {"content":"wow2","date":"2025-09-18T00:13:25.240Z"}
+    deactivate server
